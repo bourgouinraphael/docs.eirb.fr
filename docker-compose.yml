@@ -1,0 +1,9 @@
+# Important note : this is dev container, for prod run `make build`
+services:
+  mkdocs:
+    image: squidfunk/mkdocs-material:latest
+    container_name: mkdocs
+    ports:
+      - 8000:8000
+    volumes:
+      - ./mkdocs:/docs
