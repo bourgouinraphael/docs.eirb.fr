@@ -4,6 +4,13 @@ Ceci est le dépôt de [docs.eirb.fr](https://docs.eirb.fr), le but est de
 documenter les comment fonctionne Eirbware, et surtout le pourquoi Eirbware
 fonctionne de cette façon.
 
+## Documentation pour créer de la documentation
+
+On utilise le conteneur de "Material for MKdocs", des plugins sont préinstallés,
+et quelques fonctionnalités sont ajoutées, pour plus d'infos, c'est dans le lien
+suivant : https://squidfunk.github.io/mkdocs-material/getting-started/
+
+
 ## Développement
 
 Ce dépôt propose un fichier `docker-compose.yml`, il sert **uniquement au
