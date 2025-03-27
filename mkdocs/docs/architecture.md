@@ -84,4 +84,9 @@ Ce script peut être trouvé sur ce [](https://github.com/Eirbware/server)dépô
 on n'est jamais à l'abri d'une **erreur de configuration**, mais il peut être manuellement
 partagé avec **quiconque étant intéressé par le projet**.
 
+### Firewall
+
+Deux mécanismes de défense sont mis en place pour le firewall : un mécanisme
+**statique** et un mécanisme **dynamique**.
+
 
