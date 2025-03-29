@@ -58,7 +58,7 @@ développées dans les sections suivantes.
 
 Schématiquement, voici à quoi ressemble l'architecture :
 
-![Vue globale de l'architecture du VPS d'Eirbware](/images/Eirbware.png){ align=left, loading=lazy }
+![Vue globale de l'architecture du VPS d'Eirbware](images/Eirbware.png){ align=left, loading=lazy }
 /// caption
 Vue globale de l'architecture du VPS d'Eirbware
 ///
@@ -71,6 +71,39 @@ il a été choisi que certains services seront lancés **sans docker**
 
 Plus de détails relatifs à ces choix seront dans les sections relatives à ces sujets.
 
+### Pourquoi Almalinux ?
+
+La question de la distribution linux a utilisée pour le VPS s'est rapidement
+posée, et plusieurs candidats sont sortis du lot :
+
+* [Debian](https://www.debian.org/)
+* [Almalinux](https://almalinux.org/)
+* [CoreOs](https://fedoraproject.org/coreos/)
+
+Voici un tableau des fonctionnalités proposées par chacune des distributions :
+
+|         | Debian           | Almalinux        | CoreOs           |
+|         |                  |                  |                  |
+| LTS     | :material-check: | :material-check: | :material-close: |
+| SeLinux | :material-close: | :material-check: | :material-check: |
+
+Almalinux et CoreOs sont des distributions de la famille de Fedora, CoreOs est
+pensé pour être sécurisé, et être utilisé principalement avec des conteneurs.
+
+CoreOs a beaucoup de spécificités et difficile à prendre en main. De plus, elle
+ne propose **ne propose pas de LTS**, i.e. nécessite de faire des **mises à
+jour majeures fréquemment**, ce qui a été jugé trop contraignant sachant qu'un mandat d'Eirbware
+est de 1 an.
+
+Almalinux quant à elle propose une **LTS**, et étant basée sur Fedora, elle a
+une **bonne intégration de** [**SELinux**](https://www.redhat.com/en/topics/linux/what-is-selinux), un module de sécurité niveau kernel pouvant
+prévenir de montées en privilèges comme des échappements de docker.
+
+!!! note "Choix final"
+
+    Il a été jugé que Almalinux était plus intéressant que Debian, notamment par
+    rapport à son support de SELinux (les paquets proposés par le gestionnaire `dnf`
+    ont tous une configuration testés au préalable pour Fedora).
 
 ### Installation de la nouvelle architecture
 
@@ -78,9 +111,9 @@ En plus de cette documentation, nous avons essayé **d'automatiser l'installatio
 l'architecture, le but étant de garder une trace écrite de la **méthode exacte**
 d'installation du serveur.
 
-L'installation se fait suite par l'utilisation d'un script
+L'installation se fait suite à l'installation par l'utilisation d'un script
 [shell POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html).
-Ce script peut être trouvé sur ce [](https://github.com/Eirbware/server)dépôt d'Eirbware, il est en privé, car
+Ce script peut être trouvé sur [ce dépôt d'Eirbware](https://github.com/Eirbware/server), il est en privé, car
 on n'est jamais à l'abri d'une **erreur de configuration**, mais il peut être manuellement
 partagé avec **quiconque étant intéressé par le projet**.
 
@@ -88,5 +121,20 @@ partagé avec **quiconque étant intéressé par le projet**.
 
 Deux mécanismes de défense sont mis en place pour le firewall : un mécanisme
 **statique** et un mécanisme **dynamique**.
+
+Le premier firewall est [`firewalld`](https://firewalld.org/), il est préinstallé sur Almalinux. Ce firewall
+est statique et permet d'empêcher l'accès aux ports autre que :
+
+* 22 (pour `SSHD` et `SFTP`)
+* 80 (pour `HTTP`)
+* 443 (pour `HTTPS`)
+* 51820 (pour `wireguard`, le VPN)
+
+C'est notamment important pour prévenir de mauvaises configurations de conteneurs
+qui configureraient des forwarding sur `0.0.0.0` plutôt que `127.0.0.1`.
+
+Le second firewall est [`crowdsec`](https://www.crowdsec.net/), il s'agit d'une solution dynamique, à partir des logs, il essaye de détecter des schémas
+d'attaques et de prendre une décision en conséquence comme un ban IP.
+
 
 
