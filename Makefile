@@ -4,7 +4,7 @@ all:
 
 .PHONY: dev
 dev:
-	docker compoes up -d
+	docker compose up -d
 
 .PHONY: build
 build:
