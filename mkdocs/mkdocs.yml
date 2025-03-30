@@ -2,7 +2,7 @@ site_name: Eirbware's Docs
 nav:
   - Home: index.md
   - Architecture: architecture.md
-  - Ajouter un site: new_site.md
+  - Gestion du VPS: gestion_vps.md
   - HOWTO respo web: respo_web.md
   - About: about.md
 theme:
@@ -25,6 +25,29 @@ theme:
       bug: octicons/bug-16
       example: octicons/beaker-16
       quote: octicons/quote-16
+
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
 
 
 # Images https://squidfunk.github.io/mkdocs-material/reference/images/?h=image
