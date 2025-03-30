@@ -8,7 +8,12 @@ Vous trouverez sur cette page **tout ce qu'il faut savoir** pour :
 * Demander l'ajout d'un site
 * Demander un accès pour mettre à jour un site
 * Mettre à jour un site.
-* Se connecter au CAS
+* Gérer la connexion au CAS
+
+!!! note "Imposante la brasse 😱"
+
+    Cette page de documentation est assez longue, n'hésitez pas à utiliser le
+    sommaire à droite pour aller directement à la section qui vous intéresse.
 
 ## Comment demander l'ajout d'un site
 
@@ -117,4 +122,150 @@ gestionnaire de fichier.
 
 En fonction du type de site web, la mise à jour se fait différemment.
 
+#### Site statique ou php
 
+Eirbware utilise `docker` pour tous les sites hébergés. Pour des raisons
+techniques, la plupart des sites sont de cette forme :
+
+```title="Architecture des fichiers d'un site statique ou php"
+/docker-compose.yml  # Définis Docker nginx, pas besoin de modifier
+/nginx  # Dossier partagé avec le docker
+/nginx/nginx  # Configuration nginx
+/nginx/php  # Librairies php
+/nginx/www  # Code du site
+/nginx/log  # Log de nginx
+/nginx/keys  # Inutilisé
+```
+
+Pour plus de détails sur le `docker` utilisé, vous trouverez la documentation
+[ici](https://docs.linuxserver.io/images/docker-nginx/).
+
+Si vous voulez mettre à jour le site, il **suffit donc de modifier** le contenu
+du dossier `/nginx/www`.
+
+#### Site conteneurisé
+
+Si le site que vous maintenez utilise un backend autre que `php`, vous allez
+probablement utiliser un fichier `docker-compose.yml` fait **sur-mesure**.
+
+Si tel est le cas, nous n'avons probablement **aucune documentation** sur ce
+dernier, il est de la **responsabilité du club ou de l'association** de mettre
+en œuvre les outils **nécessaires à la maintenabilité** du site web.
+
+Voici tout de même des informations à connaître pour savoir comment gérer un
+tel site :
+
+* Vous pouvez upload un Dockerfile pour compiler sur le serveur
+* Évitez d'upload le dossier `.git`
+* Pour redémarrer ou recompiler le docker, faites le sur [portainer.vpn.eirb.fr](https://portainer.vpn.eirb.fr)
+
+!!! note "Portainer"
+
+    Pour plus d'information sur l'accès au portainer, référez-vous à la section
+    `VPN` plus bas.
+
+!!! note "Ports exposés"
+
+    Nous **n'autorisons qu'un forward de port** de **localhost** à un conteneur.
+    Ce port est **précisé dans le fichier `/README.md`** de votre site, si vous
+    avez besoin d'exposer plusieurs conteneurs, utilisez un
+    [reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy)
+    
+    [Caddy](https://caddyserver.com/) peut être une solution adaptée pour mettre
+    en place facilement un reverse proxy avec un `Caddyfile`.
+
+## Accès au `VPN`
+
+Certains outils d'administration sont installés sur le serveur, pour des
+raisons de **sécurité**, ces outils **ne sont pas accessibles par internet**.
+
+Parmi ces outils, **seul Portainer** vous concerne.
+
+!!! warning "Accès à `*.vpn.eirb.fr`"
+
+    L'accès à ces noms de domaines se fait **uniquement via le `VPN`**, et vous
+    devrez utiliser le `DNS` qui est sur ce `VPN`, vérifiez que le
+    [`DoH`](https://en.wikipedia.org/wiki/DNS_over_HTTPS) n'est pas activé sur
+    votre navigateur.
+
+### Demander un accès
+
+De la même façon que pour l'accès `SFTP`, il vous faut contacter un membre
+d'Eirbware, voici quelques techniques :
+
+* Le contacter directement sur Telegram si vous en connaissez un
+* Envoyer un message sur le groupe [Discussion d'Eirbware](https://telegram.eirb.fr) sur Telegram
+* Envoyer un mail à [eirbware@enseirb-matmeca.fr](mailto:eirbware@enseirb-matmeca.fr)
+
+On vous transmettra à l'issue de cette demande un fichier `wg_eirb.conf` qui
+est un fichier de configuration pour `wireguard`.
+
+### Installer un logiciel pour se connecter
+
+Il vous faudra télécharger un
+[client pour `wireguard`](https://www.wireguard.com/install/).
+
+#### Se connecter sous linux
+
+Normalement, vous avez téléchargé un client `wireguard` en utilisant le
+gestionnaire de paquets de votre distribution.
+
+Le paquet que vous avez installé vous a normalement installé le script
+`wg-quick`, vous pourrez vous connecter au `VPN` en utilisant la commande
+suivante dans un `shell` :
+
+```sh title="Commande pour se connecter au VPN sous linux"
+wg-quick up ./wg_eirb.conf
+```
+
+!!! warning "Chemin vers la config `wireguard`"
+
+    Vous devez spécifier un chemin **relatif ou absolu** vers la configuration
+    `wireguard`, comme `./wg_eirb.conf` ou `/tmp/wg_eirb.conf`, sinon
+    `wg-quick` essayera de trouver le fichier dans `/etc/wireguard`.
+
+Pour vous déconnecter, exécutez :
+
+```sh title="Commande pour se déconnecter du VPN sous linux"
+wg-quick down ./wg_eirb.conf
+```
+
+#### Se connecter sous Windows
+
+jsp comment faire mdr
+
+## Gérer la connexion CAS
+
+Le CAS a **toujours été** un problème très ennuyeux à gérer.
+
+Nous avons essayé de trouver deux solutions pour que la mise en place d'une
+connexion CAS soit la **plus simple possible**.
+
+### En utilisant notre `API` "protect"
+
+Si votre site est statique ou est fait en `PHP`, et utilise la configuration
+`nginx` par défaut, nous vous conseillons cette solution.
+
+Il s'agit d'un petit serveur `PHP` présent dans toutes les configurations par
+défaut, nous proposons une librairie `javascript` pour l'utiliser depuis le
+site web.
+
+Pour télécharger la librairie, et avoir plus de documentation au sujet de
+protect, allez sur [ce dépôt](https://github.com/Eirbware/protect).
+
+### En utilisant [OpenID](https://openid.net/) avec keycloak ([connect.eirb.fr](https://connect.eirb.fr))
+
+Étant donné que le CAS est assez désagréable à utiliser, et n'est pas
+accessible en local, nous avons mis en place un relais d'authentification avec
+[keycloak](https://www.keycloak.org/).
+
+Vous pourrez utiliser ce système d'authentification à l'aide de librairies
+(OpenID Provider), OpenID [en liste un certain nombre](https://openid.net/developers/certified-openid-connect-implementations/)
+
+Voici une liste plus timide que vous pouvez utiliser :
+
+* PHP : [OpenID-Connect-PHP](https://github.com/jumbojett/OpenID-Connect-PHP)
+* JS/TS : [openid-client](https://www.npmjs.com/package/openid-client)
+
+Pour pouvoir vous utiliser OpenID, vous devrez utiliser un secret, vous le
+trouverez avec une configuration dans le dossier du site web que vous maintenez.
