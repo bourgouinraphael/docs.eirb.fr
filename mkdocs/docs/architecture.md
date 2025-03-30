@@ -133,8 +133,30 @@ est statique et permet d'empêcher l'accès aux ports autre que :
 C'est notamment important pour prévenir de mauvaises configurations de conteneurs
 qui configureraient des forwarding sur `0.0.0.0` plutôt que `127.0.0.1`.
 
-Le second firewall est [`crowdsec`](https://www.crowdsec.net/), il s'agit d'une solution dynamique, à partir des logs, il essaye de détecter des schémas
+Le second firewall est [`crowdsec`](https://www.crowdsec.net/), il s'agit d'une
+solution dynamique, à partir des logs, il essaye de détecter des schémas
 d'attaques et de prendre une décision en conséquence comme un ban IP.
 
+### Architecture des dossiers
+
+Voici globalement les dossiers utilisés pour créer l'architecture d'Eirbware
+
+```title="Dossiers principaux de l'architecture d'Eirbware"
+/
+├── home  # Home des admins
+├── int   # Homes des services internes
+├── opt/eirbware/bin  # Emplacement des scripts
+└── srv   # Homes des services publiques
+```
+
+!!! note "Utilisation des scripts"
+
+    Les scripts doivent être utilisés avec `sudo`, et le dossier
+    `/opt/eirbware/bin` a été rajouté à la variable `$PATH`.
+
+À noter, le dossier de configuration du `nginx` principal est `/etc/nginx`,
+celui de `wireguard` est `/etc/wireguard` et celui de `sshd` est `/etc/sshd`.
+
+Pour plus de détails, référez-vous à la page de [gestion du VPS](gestion_vps.md).
 
 
