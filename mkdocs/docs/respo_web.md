@@ -269,3 +269,54 @@ Voici une liste plus timide que vous pouvez utiliser :
 
 Pour pouvoir vous utiliser OpenID, vous devrez utiliser un secret, vous le
 trouverez avec une configuration dans le dossier du site web que vous maintenez.
+
+## Conseil de la part d'Eirbware
+
+Il existe aujourd'hui beaucoup de technologies pour créer des sites web, et il
+y a de quoi se demander "Quelle technologie devrais-je utiliser ?".
+
+Voici quelques conseils que nous avons à vous partager en prenant en compte le
+système associatif de l'ENSEIRB.
+
+!!! note "Contrainte principale de l'associatif"
+
+    Les clubs et les associations de l'ENSEIRB changent de membres
+    **tous les ans**, il est primordiale de s'assurer que le mandat suivant
+    puisse **maintenir le site**.
+
+### Considérez le vanilla
+
+Considérez de faire votre site en HTML/CSS/JS vanilla, voici les avantages :
+
+* S'il y a un respo web dans le prochain mandat, il maitrisera les technologies
+* Pas besoin d'avoir un dépôt git pour stocker les sources
+
+### Technologies pour un backend
+
+Si vous avez **absolument** besoin d'un backend, vous pouvez utiliser la
+technologie que vous voulez, car tous les sites sont conteneurisés.
+
+Cependant, comme dit précédemment, potentiellement **personne ne pourra
+maintenir le site** dans le futur.
+
+!!! warning "Considérez notre API `protect` d'abord"
+
+    L'API que nous proposons avec `protect` permet quelques fonctionnalités
+    avec une connexion CAS, peut-être que c'est suffisant pour vos besoins.
+
+    Peut-être que votre besoin peut être rajouté à `protect`, si votre besoin
+    est proche de ce que cette API propose, considérez d'en parler à Eirbware
+    pour que ça soit rajouté.
+
+Si vous avez besoin d'un backend, nous vous conseillons :
+
+* De garder le backend le plus simple possible
+* Pour une base de donnée, restez sur [postgres](https://www.postgresql.org/) ou [sqlite](https://www.sqlite.org/)
+* Restez sur du SQL, c'est étudié en cours, pas [mongodb](https://www.mongodb.com/), ni [redis](https://redis.io/)
+* D'utiliser git pour versionner le code, et le transmettre aux passations
+
+Pour ce qui est des technologies pour un backend, nous vous conseillons :
+
+* [NodeJS](https://nodejs.org) & [ExpressJS](https://expressjs.com/), ce framework est basique et permet d'être plus maintenable
+* [Flask](https://flask.palletsprojects.com) en python, idem, simple donc maintenable même avec peu de connaissances
+

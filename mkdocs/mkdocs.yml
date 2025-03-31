@@ -1,4 +1,5 @@
 site_name: Eirbware's Docs
+site_url: https://docs.eirb.fr
 nav:
   - Home: index.md
   - Architecture: architecture.md
@@ -80,7 +81,6 @@ markdown_extensions:
 
 plugins:
   - search
-  - offline  # Enable offline searches
   - minify:
       minify_html: true
       minify_js: true
