@@ -9,6 +9,34 @@ VPS, il est **vivement conseillé** de bien avoir en tête
 
 ## Installation
 
+## Utilisation de `sudo`
+
+Une utilisation incorrecte de `sudo` mène généralement à une utilisation non
+prévue du serveur (cf [historique de l'architecture](architecture.md#historique-de-larchitecture)).
+
+### Whitelist des programmes disponibles
+
+Il peut y avoir des failles de sécurités liées à l'
+[utilisation de wildcard (`*`) dans la configuration de  `sudo`](https://blog.compass-security.com/2012/10/dangerous-sudoers-entries-part-4-wildcards/).
+
+Ainsi, les utilisateurs du groupe `admin` ont accès à une liste explicite de
+programmes avec `sudo`
+
+Cette liste contient :
+
+* Les scripts du dossier `/opt/eirbware/bin`
+* `su`
+
+Voici comment utiliser `sudo` pour ces deux éléments :
+
+#### Utilisation des scripts
+
+#### Utilisation de `su`
+
+#### Utilisateur `eirbware`
+
+#### Comment faire des choses non prévues ?
+
 
 
 ## Firewall
@@ -69,10 +97,24 @@ utilise des [user namespaces](https://docs.docker.com/engine/security/userns-rem
 
 ### Utilisation de docker en mode rootful
 
-Lié à
+On a vu juste avant que la gestion des `uid` était pénible avec docker, et ce
+n'est rien comparé à la **gestion des `gid`**.
 
+Ce qui fait que si un conteneur doit accéder aux logs du serveur (ex: `alloy` ou
+`crowdsec`), la façon **la plus facile** est de les lancer avec le `dockerd`
+rootful, ce qui permet de [bind mount](https://docs.docker.com/engine/storage/bind-mounts)
+sans avoir de **problèmes de permissions**.
+
+Dans la mesure où ces services sont internes et **ne sont jamais exposés** sur
+internet, on considère que ce n'est pas un problème.
 
 ## Gestion des services
+
+Cette section se concentre sur :
+
+* L'organisation des services
+* Les configurations avec le `nginx` principal
+* L'utilisation
 
 ### Redirections
 

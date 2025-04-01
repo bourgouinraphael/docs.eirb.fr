@@ -7,7 +7,7 @@ Vous trouverez les différents sujets dans la barre de navigation verticale à
 gauche, si des modifications sont nécessaires, ça se fait là :
 [https://github.com/Eirbware/docs.eirb.fr](https://github.com/Eirbware/docs.eirb.fr)
 
-!!! note "Tips de fou"
+!!! info "Tips de fou"
 
     Appuyez sur `s` pour ouvrir la barre de recherche
 

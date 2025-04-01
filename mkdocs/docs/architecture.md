@@ -99,7 +99,7 @@ Almalinux quant à elle propose une **LTS**, et étant basée sur Fedora, elle a
 une **bonne intégration de** [**SELinux**](https://www.redhat.com/en/topics/linux/what-is-selinux), un module de sécurité niveau kernel pouvant
 prévenir de montées en privilèges comme des échappements de docker.
 
-!!! note "Choix final"
+!!! info "Choix final"
 
     Il a été jugé que Almalinux était plus intéressant que Debian, notamment par
     rapport à son support de SELinux (les paquets proposés par le gestionnaire `dnf`
@@ -149,7 +149,7 @@ Voici globalement les dossiers utilisés pour créer l'architecture d'Eirbware
 └── srv   # Homes des services publiques
 ```
 
-!!! note "Utilisation des scripts"
+!!! info "Utilisation des scripts"
 
     Les scripts doivent être utilisés avec `sudo`, et le dossier
     `/opt/eirbware/bin` a été rajouté à la variable `$PATH`.

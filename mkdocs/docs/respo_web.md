@@ -10,7 +10,7 @@ Vous trouverez sur cette page **tout ce qu'il faut savoir** pour :
 * Mettre à jour un site.
 * Gérer la connexion au CAS
 
-!!! note "Imposante la brasse 😱"
+!!! info "Imposante la brasse 😱"
 
     Cette page de documentation est assez longue, n'hésitez pas à utiliser le
     sommaire à droite pour aller directement à la section qui vous intéresse.
@@ -51,7 +51,7 @@ Cependant, il est compréhensible que des interfaces graphiques soient plus
 agréables, la plupart des gestionnaires de fichiers vous permettront de vous
 connecter en `SFTP` de la manière suivant.
 
-!!! note "Gestionnaires de fichiers testés"
+!!! info "Gestionnaires de fichiers testés"
 
     La plupart des gestionnaires de fichiers doivent fonctionner, mais nous
     n'avons testé que [nemo](https://github.com/linuxmint/nemo),
@@ -159,12 +159,12 @@ tel site :
 * Évitez d'upload le dossier `.git`
 * Pour redémarrer ou recompiler le docker, faites le sur [portainer.vpn.eirb.fr](https://portainer.vpn.eirb.fr)
 
-!!! note "Portainer"
+!!! info "Portainer"
 
     Pour plus d'information sur l'accès au portainer, référez-vous à la section
     `VPN` plus bas.
 
-!!! note "Ports exposés"
+!!! info "Ports exposés"
 
     Nous **n'autorisons qu'un forward de port** de **localhost** à un conteneur.
     Ce port est **précisé dans le fichier `/README.md`** de votre site, si vous
@@ -278,7 +278,7 @@ y a de quoi se demander "Quelle technologie devrais-je utiliser ?".
 Voici quelques conseils que nous avons à vous partager en prenant en compte le
 système associatif de l'ENSEIRB.
 
-!!! note "Contrainte principale de l'associatif"
+!!! info "Contrainte principale de l'associatif"
 
     Les clubs et les associations de l'ENSEIRB changent de membres
     **tous les ans**, il est primordiale de s'assurer que le mandat suivant
@@ -290,6 +290,60 @@ Considérez de faire votre site en HTML/CSS/JS vanilla, voici les avantages :
 
 * S'il y a un respo web dans le prochain mandat, il maitrisera les technologies
 * Pas besoin d'avoir un dépôt git pour stocker les sources
+
+Cependant, écrire un code _scalable_ en vanilla n'est pas trivial,
+notamment pour l'écriture du `CSS`. Il est conseillé d'utiliser la
+[convention BEM](https://getbem.com) pour s'en sortir en écrivant ce genre de
+site.
+
+### Si le vanilla vous fait peur
+
+L'avantage du vanilla est qu'il est _censé_ être un prérequis aux autres
+technologies web, ce qui le rend universel. Le maintenir peut tout de même être
+pénible.
+
+Voici des notes à propos des alternatives.
+
+!!! warning "La contrepartie très importante"
+
+    Un site qui n'est pas fait en vanilla, nécessite d'être compilé !
+
+    La version sur [eirb.fr](https://eirb.fr) **ne peut donc pas suffire** à une
+    passation, un **dépôt git et des instructions de compilations** doivent
+    être transmise au prochain mandat pour que le site soit **maintenable**.
+
+!!! info "Conseil pour gérer un dépôt git"
+
+    Considérez la création d'une [organisation github](https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/creating-a-new-organization-from-scratch),
+    cela permet de simplifier une passation : il n'y a plus qu'à changer le
+    propriétaire de l'organisation
+
+#### Le cas Typescript
+
+Le manque de typage en javascript est **clairement** ennuyeux, et l'utilisation
+de [typescript](https://www.typescriptlang.org) est clairement intéressant.
+
+#### Les frameworks CSS
+
+Les frameworks comme [tailwindCSS](https://tailwindcss.com) et
+[bootstrap](https://getbootstrap.com) se comprend : cela permet de gérer le
+responsive plus facilement, et d'accélérer la phase de développement.
+
+Voici une [liste _assez imposante_ de frameworks](https://github.com/troxler/awesome-css-frameworks).
+
+#### Les frameworks JS
+
+En derniers viennent les frameworks JS, faire un site en
+[React](https://react.dev/) est tentant, mais on a toujours la même
+problématique : tout le monde ne connait pas React.
+
+#### Générateurs de sites statiques
+
+En fonction du besoin, les générateurs de sites statiques (comme
+[Material for mkdocs](https://squidfunk.github.io/mkdocs-material) utilisé pour
+le site sur lequel vous êtes) peut être une **très bonne solution**.
+
+Ils permettent de générer un site web en vous **concentrant sur le contenu**.
 
 ### Technologies pour un backend
 
