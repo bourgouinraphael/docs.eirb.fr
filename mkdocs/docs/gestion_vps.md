@@ -19,25 +19,93 @@ prévue du serveur (cf [historique de l'architecture](architecture.md#historique
 Il peut y avoir des failles de sécurités liées à l'
 [utilisation de wildcard (`*`) dans la configuration de  `sudo`](https://blog.compass-security.com/2012/10/dangerous-sudoers-entries-part-4-wildcards/).
 
-Ainsi, les utilisateurs du groupe `admin` ont accès à une liste explicite de
-programmes avec `sudo`
+C'est pourquoi, les utilisateurs du groupe `admin` ont accès à une liste
+**explicite** de programmes avec `sudo`
 
 Cette liste contient :
 
 * Les scripts du dossier `/opt/eirbware/bin`
 * `su`
 
+!!! info "Obtenir cette whitelist"
+
+    Vous pouvez savoir quelles commandes vous pouvez exécuter avec `sudo` en
+    exécutant :
+
+    ```sh title="Lister les commandes éxecutable en sudo"
+    sudo -l
+    ```
+
 Voici comment utiliser `sudo` pour ces deux éléments :
 
 #### Utilisation des scripts
 
-#### Utilisation de `su`
+Différents scripts sont écrits pour la gestion du VPS d'Eirbware, et sont tous
+ajoutés dans la variable `$PATH` des administrateurs, ils doivent tous être
+utilisés avec `sudo`.
+
+!!!info "Documentation sur les scripts"
+
+    Seule la façon dont les scripts doivent être exécutés est expliquée ici,
+    pour des détails plus précis sur les scripts eux même, référez-vous aux
+    autres sections
+
+Pour les utiliser les scripts, exécutez simplement `sudo <script>`, par exemple :
+
+```sh title="Exemple d'exécution du script 'new_site' pour créer pix.eirb.fr"
+sudo new_site pix
+```
+
+#### Utilisation de `su - <user>`
+
+Si une modification doit être faite par un administrateur sur un site, il doit
+se **connecter sur le VPS en tant que cet utilisateur**.
+
+Pour ce faire, on utilise la commande `su - <user>`, par exemple :
+
+```sh title="Exemple de connexion en tant que www-pix"
+sudo su - www-pix
+```
+
+L'utilisation de `sudo` est requise, car le mot de passe pour l'utilisateur
+`www-pix` n'est pas connu.
+
+!!!warning "Pourquoi `su -` ?"
+
+    Il est important de conserver les **différentes permissions** mises en place sur le
+    serveur.
+
+    La façon la plus simple de le faire est de **ne pas utiliser `sudo` à tort
+    et à travers** pour exécuter des commandes en tant que `root`.
+
+    Sur le serveur, si une modification doit être faite, on **essaye dans un
+    premier temps** de le faire en tant que l'utilisateur concerné.
 
 #### Utilisateur `eirbware`
 
-#### Comment faire des choses non prévues ?
+Malheureusement, tout ne peut pas être prévu. Et il peut être nécessaire
+d'exécuter des commandes en tant que `root`.
 
+Pour ce faire, un utilisateur `eirbware` a été créé, vous pouvez vous connecter
+en tant qu'`eirbware` en faisant :
 
+```sh title="Exemple de connexion en tant qu'utilisateur eirbware"
+sudo su - eirbware
+```
+
+Cet utilisateur appartient au groupe `wheel` et peut exécuter `sudo` avec
+**tous les programmes sur le VPS** moyennant une mot de passe.
+
+!!!info "Mot de passe du compte `eirbware`"
+
+    Vous pourrez trouver le mot de passe du compte `eirbware` sur
+    [le vaultwarden d'Eirbware](https://vault.eirb.fr).
+
+!!!info "Pourquoi ne pas ajouter tous les admins dans `wheel` ?"
+
+    Le but est d'encourager la gestion du VPS comme elle a été pensée, mais de
+    laisser un accès complet à `sudo` _pas trop contraignant_ en cas de réel
+    besoin.
 
 ## Firewall
 
@@ -95,7 +163,7 @@ utilise des [user namespaces](https://docs.docker.com/engine/security/userns-rem
     utilisés sur le VPS.
 
 
-### Utilisation de docker en mode rootful
+### Utilisation de docker en mode _rootful_
 
 On a vu juste avant que la gestion des `uid` était pénible avec docker, et ce
 n'est rien comparé à la **gestion des `gid`**.
@@ -106,15 +174,14 @@ rootful, ce qui permet de [bind mount](https://docs.docker.com/engine/storage/bi
 sans avoir de **problèmes de permissions**.
 
 Dans la mesure où ces services sont internes et **ne sont jamais exposés** sur
-internet, on considère que ce n'est pas un problème.
+internet, on considère que ce n'est pas un problème de sécurité.
 
-## Gestion des services
+## Configuration du `nginx` principal
 
 Cette section se concentre sur :
 
-* L'organisation des services
+* L'organisation des services dans la configuration de `nginx`
 * Les configurations avec le `nginx` principal
-* L'utilisation
 
 ### Redirections
 
@@ -180,6 +247,43 @@ On peut y retrouver :
 ├── proxy_headers.conf  # Factorisation de la création des headers pour proxy les requêtes
 └── hardening.conf      # Configurations diverses de sécurité
 ```
+
+## Gestion des services
+
+Cette section se concentre sur :
+
+* La création d'un nouveau service
+* L'archivage d'un service
+
+!!!info "Comment supprimer un service ?"
+
+    Volontairement, on **ne peut pas supprimer** un service, le but étant de ne
+    pas perdre de données.
+
+    Selon les contraintes de stockages actuelles, il n'y a pas de problème lié
+    à ce système.
+
+### Création d'un nouveau service
+
+### Archivage d'un service
+
+
+## Gestion des utilisateurs
+
+Cette section se concentre sur :
+
+* La création d'un nouvel administrateur
+* L'archivage d'un administrateur
+* L'ajout d'un accès à un respo web
+* La révocation d'un accès `SSH`/`SFTP`
+
+### Création d'un nouvel administrateur
+
+### Archivage d'un administrateur
+
+### Ajout d'un accès à un respo web
+
+### Révocation d'un accès `SSH`/`SFTP`
 
 ## `SSH` et `SFTP`
 

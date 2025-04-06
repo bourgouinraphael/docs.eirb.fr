@@ -4,6 +4,7 @@ nav:
   - Home: index.md
   - Architecture: architecture.md
   - Gestion du VPS: gestion_vps.md
+  - Passation: passation.md
   - HOWTO respo web: respo_web.md
   - About: about.md
 theme:
