@@ -18,5 +18,5 @@ start:
 
 .PHONY:clean
 clean:
-	${RM} -r mkdocs/site
+	sudo ${RM} -r mkdocs/site
 	docker compose down
