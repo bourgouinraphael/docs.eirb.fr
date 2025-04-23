@@ -31,6 +31,14 @@ Il a l'avantage de proposer un **système d'organisations**, il suffit donc de
 **créer des comptes** pour le mandat suivant pour transmettre les mots de
 passes.
 
+### Compte eirbware
+
+Sur un maximum de services, on essaye de garder un compte "eirbware", dont les
+différents mots de passe sont stockés sur [le vaultwarden](https://vault.eirb.fr).
+
+Ce système plutôt que de donner des accès administrateurs à chaque membres du
+bureau permet de réduire le nombre d'actions à faire lors d'une passation
+
 ### Créer des comptes
 
 1. Aller sur [vault.eirb.fr](https://vault.eirb.fr)
@@ -114,5 +122,60 @@ Pour utiliser vaultwarden, nous conseillons d'utiliser l'extension de navigateur
 
 !!!info "Tips avec l'extension"
 
-    En faisant Ctrl+l, vous pouvez compléter un formulaire de login
+    En faisant Ctrl+l, vous pouvez remplir un formulaire de login
     automatiquement.
+
+
+## Créer des comptes admin sur le VPS
+
+Usuellement, les membres suivants ont accès au VPS :
+
+* Président
+* Vice-président
+* Respo serveur
+
+### Création d'un compte
+
+L'ajout d'un administrateur se fait en exécutant la commande suivante :
+
+```sh
+sudo new_admin <admin name>
+```
+
+Par exemple :
+
+```sh
+sudo new_admin ndacremont  # Va créer l'utilisateur adm-ndacremont
+```
+
+### Créer un accès `SSH`
+
+Après avoir créé l'utilisateur admin, vous pouvez créer un accès `SSH`.
+
+Pour ce faire, il faut la _passphrase_ du certificat `SSH` d'Eirbware, qui est
+trouvable sur [le vaultwarden](https://vault.eirb.fr).
+
+Il suffit ensuite d'exécuter la commande suivante :
+
+```sh
+sudo cert_new -k <chemin vers clef publique> adm-<admin name>
+```
+
+Par exemple, la commande suivante va créer un certificat `/tmp/id-cert.pub` pour
+la clef publique donnée `/tmp/id.pub` pour l'utilisateur `adm-ndacremont`.
+
+```sh
+sudo cert_new -k /tmp/id.pub adm-ndacremont
+```
+
+Le mieux est de demander la clef `SSH` publique des membres d'Eirbware
+
+!!!info "Accès à la _passphrase_ du certificat"
+
+    Avant, seul le président d'Eirbware avait accès à la _passphrase_ du
+    certificat.
+    
+    Sachant que les accès à la mise à jour des sites se fait maintenant en
+    `SFTP`, il a été jugé plus simple de permettre à tous les membres ayant
+    accès au serveur de créer de nouveaux accès `SFTP` quitte à ce qu'ils
+    puisse créer de nouveaux accès `SSH`.
