@@ -99,8 +99,14 @@ via `SFTP` vers un dossier local, ici `~/mnt`.
     de ne pas avoir à démonter le dossier après coup, et de savoir clairement
     quand on est connecter ou non.
 
+!!! info "Utilisation des options `-o`"
+
+    En utilisant le flag `-oauto_cache,reconnect,no_readahead`, il est possible
+    de gagner énormément en vitesse de transfert (~10x). Il est donc conseillé
+    de l'utiliser.
+
 ```sh title="Exemple de connexion à pixeirb avec sshfs"
-sshfs -f eirb_pix: ~/mnt
+sshfs -f eirb_pix: ~/mnt -oauto_cache,reconnect,no_readahead
 ```
 
 Vous avez maintenant accès aux fichiers du site web en passant par le dossier
