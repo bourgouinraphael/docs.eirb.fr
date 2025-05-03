@@ -32,6 +32,6 @@ jobs:
         - name: Deploy the site through sftp
           run: |
             mkdir -p ${HOME}/mnt
-            sshfs eirb_docs: ${HOME}/mnt
+            yes "" | sshfs -opassword_stdin eirb_docs: ${HOME}/mnt
             cp -r mkdocs/site/* ${HOME}/mnt/nginx/www
             umount ${HOME}/mnt
