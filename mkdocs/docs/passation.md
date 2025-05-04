@@ -5,6 +5,20 @@ Cette page permet de lister ce qu'il faut faire lors **d'une passation d'Eirbwar
 Le but étant d'uniformiser les passations pour limiter les oublis et les pertes
 d'informations.
 
+## Accès au local
+
+Généralement, tous les membres d'Eirbware ont accès par badge au local, le
+nouveau président d'Eirbware se voit remettre par le président sortant la clef
+du local.
+
+Pour ce qui est de la procédure d'ajout d'accès au local, elle est partagée
+verbalement au président entrant.
+
+## Accès à la boîte mail `eirbware@enseirb-matmeca.fr`
+
+Le bureau a accès à cette boîte mail, la procédure d'accès à cette dernière est
+partagée verbalement au président entrant.
+
 ## La banque : Anytime
 
 C'est un enfer.
@@ -16,9 +30,9 @@ On utilise google drive pour stocker des diverses informations.
 On aimerait bien s'en débarrasser, mais les gsheet sont actuellement pratiques
 pour la trésorerie.
 
-La passation se fait en **transférant la propriété du drive au président
-entrant**, ce **nouveau président** a ensuite la responsabilité de le partager
-avec **tous les membres d'Eirbware**.
+La passation se fait en par le biais du vaultwarden, le **nouveau président**
+peut se donner accès au dossier partagé par le biais du compte google Eirbware,
+puis il a la responsabilité de le partager avec **tous les membres d'Eirbware**.
 
 ## Gestionnaire de mots de passes : Vaultwarden
 
