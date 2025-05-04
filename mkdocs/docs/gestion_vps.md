@@ -273,7 +273,69 @@ Cette section se concentre sur :
 
 ### Création d'un nouvel administrateur
 
+La création d'un administrateur se fait facilement à l'aide des scripts
+d'Eirbware, vous devrez vous occuper de ces 3 étapes :
+
+* Créer l'utilisateur
+* Créer un accès `SSH`
+* Créer un accès wireguard
+
+#### Création de l'utilisateur administrateur
+
+Afin de créer un l'utilisateur pour un nouvel administrateur, vous devez
+utiliser le script `new_admin` en tant qu'administrateur comme suivant :
+
+```title="Création d'un nouvel administrateur"
+sudo new_admin <cas_login>  # Créé l'utilisateur adm-<cas_login>
+```
+
+!!!info "Changement du mot de passe"
+
+    Ce script créé un mot de passe temporaire pour l'administrateur, il devra
+    **mettre à jour** son mot de passe lors de sa première connexion par `SSH`.
+
+#### Création de l'accès `SSH`
+
+Comme dit précédemment, l'accès par `SSH` se fait par clef et certificat, le
+nouvel administrateur devra créer une paire de clefs spécifiquement pour
+Eirbware en utilisant la commande suivante :
+
+```title="Création d'une paire de clefs `SSH` par le futur administrateur"
+ssh-keygen -t ed25519
+```
+
+Il devra ensuite transmettre la clef publique à l'utilisateur qui créé l'accès
+`SSH` afin de créer le certificat.
+
+!!!info "Stockage des clefs publiques"
+
+    Les clefs publiques des utilisateurs sont stockées dans le dossier
+    `/int/int-ssh/public_keys` avec le nom `id_<cas_login>.pub`, cela permet de
+    créer un nouveau certificat sans avoir à retransmettre la clef publique.
+
+    Il peut être utile de créer un nouveau certificat si un admin veut utiliser
+    un accès `SFTP` ou si un respo web s'occuper de plusieurs sites
+
+Finalement, la création du certificat pour l'administrateur se fait à l'aide de
+la commande suivante :
+
+```title="Création d'un certificat `SSH` pour un administrateur"
+sudo cert_new -k /int/int-ssh/public_keys/id_<cas_login>.pub adm-<cas_login>
+```
+
+!!!info "Passphrase du certificat d'Eirbware"
+
+    Afin de signer la clef publique, la passphrase du certificat d'Eirbware est
+    nécessaire, vous la trouverez sur le [Vaultwarden d'Eirbware](https://vault.eirb.fr).
+
+#### Création de l'accès wireguard
+
+L'accès au `VPN` se fait comme pour n'importe quel utilisateur, référez-vous
+directement à [cette section de la documentation](#wireguard).
+
 ### Archivage d'un administrateur
+
+En vrai c'est pas dispo atm
 
 ### Ajout d'un accès à un respo web
 
@@ -339,6 +401,44 @@ Ce script permet de :
 * Lister les accès VPN existant
 * Créer un nouvel accès VPN
 * Retirer un accès VPN
+
+!!!info "Page d'aide"
+
+    Comme pour tous les scripts d'Eirbware, il est possible d'avoir une page
+    d'aide en exécutant la commande suivante :
+
+    ```title="Page d'aide pour le script wgmanage"
+    sudo wgmanage --help
+    ```
+
+#### Lister les accès existant au VPN
+
+Il est possible de lister les accès existant au VPN en utilisant la commande
+suivante :
+
+```title="Lister les accès existant au VPN"
+sudo wgmanage list
+```
+
+#### Créer un nouvel accès au VPN
+
+La création d'un nouvel accès au VPN se fait à l'aide de la commande suivante :
+
+```title="Créer un nouvel accès au VPN"
+sudo wgmanage add <cas_login>
+```
+
+Cette commande va écrire dans le terminal la configuration wireguard à
+transmettre au nouvel utilisateur. Il est conseillé de nommer ce fichier
+configuration `wg_eirb.conf` pour des questions d'uniformisation.
+
+#### Retirer un accès au VPN
+
+La suppression accès au VPN se fait à l'aide de la commande suivante :
+
+```title="Suppression accès au VPN"
+sudo wgmanage remove <cas_login>
+```
 
 ## Monitoring
 
