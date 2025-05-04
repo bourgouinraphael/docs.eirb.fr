@@ -44,16 +44,23 @@ bureau permet de réduire le nombre d'actions à faire lors d'une passation
 1. Aller sur [vault.eirb.fr](https://vault.eirb.fr)
 1. Se connecter avec son compte (Le compte du président entrant est créé par le
 président sortant)
-1. Aller dans l'onglet "Organizations" dans le header
+1. Aller dans la section "Admin Console" en bas à gauche (section pour les Organisations)
 1. Aller dans le sous-onglet "Members" de l'organisation Eirbware
 1. Appuyer sur "Invite Member"
 1. Remplir l'Email
-1. Donner les droits adéquats comme décrit dans la section suivante
+1. Donner le rôle et les droits adéquats comme décrit dans la section suivante
 1. Appuyer sur "Save"
 1. Se déconnecter
-1. Se connecter en tant qu'Eirbware (logins dans le vaultwarden)
-1. Accepter l'ajout de membre dans le sous-onglet "Needs Confirmation" de
-l'Organisation Eirbware
+
+!!!info "Autoriser la création de compte"
+
+    Assurez-vous que la **création de compte est activée** dans l'interface
+    [d'administration de vaultwarden](https://vault.eirb.fr/admin), vous
+    trouverez le paramètre "Allow new signups" dans la section
+    "General settings"
+
+    Une fois que les comptes sont créés, vous pouvez désactiver la création de
+    compte.
 
 !!!warning "Respecter les étapes"
 
@@ -61,9 +68,10 @@ l'Organisation Eirbware
     l'organization, comme décrit dans la section "Création d'un compte"
 
     Si la personne fait directement "Create Account" sur
-    [vault.eirb.fr](https://vault.eirb.fr), alors elle **n'aura pas accès à
-    l'organisation**, et il **faudra supprimer** le compte puis le **recréer**
-    correctement.
+    [vault.eirb.fr](https://vault.eirb.fr/admin), alors elle **n'aura pas accès à
+    l'organisation**, et il **faudra supprimer** le compte depuis l'interface
+    [d'administration de vaultwarden](https://vault.eirb.fr/admin) puis le
+    **recréer** correctement.
 
 ### Notes
 
@@ -122,7 +130,7 @@ Pour utiliser vaultwarden, nous conseillons d'utiliser l'extension de navigateur
 
 !!!info "Tips avec l'extension"
 
-    En faisant Ctrl+l, vous pouvez remplir un formulaire de login
+    En faisant `Ctrl+Shift+L`, vous pouvez remplir un formulaire de login
     automatiquement.
 
 
