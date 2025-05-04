@@ -3,14 +3,35 @@ site_url: https://docs.eirb.fr
 nav:
   - Home: index.md
   - Architecture: architecture.md
-  - Gestion du VPS: gestion_vps.md
+  - Gestion du VPS:
+    - gestion_vps/intro.md
+    - gestion_vps/installation.md
+    - gestion_vps/sudo.md
+    - gestion_vps/docker.md
+    - gestion_vps/nginx.md
+    - gestion_vps/services.md
+    - gestion_vps/users.md
+    - gestion_vps/firewall.md
+    - gestion_vps/ssh.md
+    - gestion_vps/vpn.md
+    - gestion_vps/monitoring.md
   - Passation: passation.md
-  - HOWTO respo web: respo_web.md
+  - HOWTO respo web:
+    - respo_web/intro.md
+    - respo_web/ajout_site.md
+    - respo_web/acces_site.md
+    - respo_web/acces_vpn.md
+    - respo_web/maj_site.md
+    - respo_web/connexion_cas.md
+    - respo_web/conseils.md
+
   - About: about.md
 theme:
   name: material
   features:
     - navigation.instant
+    - navigation.tabs
+    - navigation.tabs.sticky
     - search.suggest
     - content.code.copy
   icon:

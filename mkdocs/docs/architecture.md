@@ -158,5 +158,3 @@ Voici globalement les dossiers utilisés pour créer l'architecture d'Eirbware
 celui de `wireguard` est `/etc/wireguard` et celui de `sshd` est `/etc/sshd`.
 
 Pour plus de détails, référez-vous à la page de [gestion du VPS](gestion_vps.md).
-
-
