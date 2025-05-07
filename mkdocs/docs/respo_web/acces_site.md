@@ -49,6 +49,7 @@ devez les adapter au site que vous maintenez) :
 
 ```title="~/.ssh/config" linenums="1"
 Host eirb_pix
+    port 30
     Hostname eirb.fr
     User www-pix
     IdentityFile    ~/.ssh/<Votre clef SSH>
