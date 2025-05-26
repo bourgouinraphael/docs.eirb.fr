@@ -2,7 +2,7 @@
 
 Ceci est le dépôt de [docs.eirb.fr](https://docs.eirb.fr), le but est de
 documenter les comment fonctionne Eirbware, et surtout le pourquoi Eirbware
-fonctionne de cette façon.
+fonctionne de cette façon. 
 
 ## Documentation pour créer de la documentation
 
