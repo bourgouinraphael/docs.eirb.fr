@@ -16,6 +16,7 @@ nav:
     - gestion_vps/vpn.md
     - gestion_vps/monitoring.md
   - Passation: passation.md
+  - Github: github.md
   - HOWTO respo web:
     - respo_web/intro.md
     - respo_web/ajout_site.md
