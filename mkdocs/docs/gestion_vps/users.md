@@ -75,4 +75,39 @@ En vrai c'est pas dispo atm
 
 ### Ajout d'un accès à un respo web
 
+Donner les accès au respo web d'un asso à son site se fait en 2 étapes:
+
+* Créer un accès `SSH`
+* Créer un accès wireguard 
+
+#### Création de l'accès ssh utilisateur 
+
+Similairement à la création d'un administrateur, le respo web devra créer une paire de clefs spécifiquement pour Eirbware, de la manière suivante:
+
+```title="Création d'une paire de clefs `SSH` par le futur administrateur"
+ssh-keygen -t ed25519
+```
+
+Il devra ensuite transmettre sa clé publique à un administrateur d'Eirbware.
+
+!!!info "Stockage des clefs publiques"
+
+    Comme dit précédemment, les clefs publiques des utilisateurs sont stockées dans le dossier
+    `/int/int-ssh/public_keys` avec le nom `id_<cas_login>.pub`.
+
+Ensuite, celui-ci créera un certificat avec la commande suivante:
+
+```title="Création d'un certificat `SSH` pour un administrateur"
+sudo cert_new -k /int/int-ssh/public_keys/id_<cas_login>.pub www-<nom_site> <cas_login>
+```
+
+!!!info "Passphrase du certificat d'Eirbware"
+
+    Afin de signer la clef publique, la passphrase du certificat d'Eirbware est
+    nécessaire, vous la trouverez sur le [Vaultwarden d'Eirbware](https://vault.eirb.fr).
+
+#### Création de l'accès wireguard
+
+Comme pour la création d'un administrateur, référez-vous à [cette page](#wireguard)
+
 ### Révocation d'un accès `SSH`/`SFTP`
