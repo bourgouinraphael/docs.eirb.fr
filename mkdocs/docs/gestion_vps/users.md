@@ -67,7 +67,7 @@ sudo cert_new -k /int/int-ssh/public_keys/id_<cas_login>.pub adm-<cas_login>
 #### Création de l'accès wireguard
 
 L'accès au `VPN` se fait comme pour n'importe quel utilisateur, référez-vous
-directement à [cette section de la documentation](#wireguard).
+directement à [cette section de la documentation](vpn.md#wireguard).
 
 ### Archivage d'un administrateur
 
@@ -108,6 +108,6 @@ sudo cert_new -k /int/int-ssh/public_keys/id_<cas_login>.pub www-<nom_site> <cas
 
 #### Création de l'accès wireguard
 
-Comme pour la création d'un administrateur, référez-vous à [cette page](#wireguard)
+Comme pour la création d'un administrateur, référez-vous à [cette page](vpn.md#wireguard)
 
 ### Révocation d'un accès `SSH`/`SFTP`
