@@ -67,7 +67,7 @@ sudo cert_new -k /int/int-ssh/public_keys/id_<cas_login>.pub adm-<cas_login>
 #### Création de l'accès wireguard
 
 L'accès au `VPN` se fait comme pour n'importe quel utilisateur, référez-vous
-directement à [cette section de la documentation](#wireguard).
+directement à [cette section de la documentation](vpn.md#wireguard).
 
 ### Archivage d'un administrateur
 
@@ -75,4 +75,52 @@ En vrai c'est pas dispo atm
 
 ### Ajout d'un accès à un respo web
 
+Donner les accès au respo web d'un asso à son site se fait en 2 étapes:
+
+* Créer un accès `SSH`
+* Créer un accès wireguard 
+
+#### Création de l'accès ssh utilisateur 
+
+Similairement à la création d'un administrateur, le respo web devra créer une paire de clefs spécifiquement pour Eirbware, de la manière suivante:
+
+```title="Création d'une paire de clefs `SSH` par le futur administrateur"
+ssh-keygen -t ed25519
+```
+
+Il devra ensuite transmettre sa clé publique à un administrateur d'Eirbware.
+
+!!!info "Stockage des clefs publiques"
+
+    Comme dit précédemment, les clefs publiques des utilisateurs sont stockées dans le dossier
+    `/int/int-ssh/public_keys` avec le nom `id_<cas_login>.pub`.
+
+Ensuite, celui-ci créera un certificat avec la commande suivante:
+
+```title="Création d'un certificat `SSH` pour un administrateur"
+sudo cert_new -k /int/int-ssh/public_keys/id_<cas_login>.pub www-<nom_site> <cas_login>
+```
+
+!!!info "Passphrase du certificat d'Eirbware"
+
+    Afin de signer la clef publique, la passphrase du certificat d'Eirbware est
+    nécessaire, vous la trouverez sur le [Vaultwarden d'Eirbware](https://vault.eirb.fr).
+
+#### Création de l'accès wireguard
+
+Comme pour la création d'un administrateur, référez-vous à [cette page](vpn.md#wireguard)
+
 ### Révocation d'un accès `SSH`/`SFTP`
+
+Afin de révoquer l'accès à un utilisateur, il faudra d'abord obtenir l'identifiant de son certificat, via la commande `cert_list`.
+
+Une fois ceci fait, la commande est:
+
+```title="Révocation d'un certificat ssh"
+sudo cert_revoke <certificate_ID>
+```
+
+!!!info "Réactiver un certificat"
+    
+    Si un certificat a été révoqué par erreur, il est possible d'annuler cette action avec l'option `-r` de la commande 
+    `cert_revoke`
