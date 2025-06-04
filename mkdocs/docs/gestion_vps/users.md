@@ -111,3 +111,16 @@ sudo cert_new -k /int/int-ssh/public_keys/id_<cas_login>.pub www-<nom_site> <cas
 Comme pour la création d'un administrateur, référez-vous à [cette page](vpn.md#wireguard)
 
 ### Révocation d'un accès `SSH`/`SFTP`
+
+Afin de révoquer l'accès à un utilisateur, il faudra d'abord obtenir l'identifiant de son certificat, via la commande `cert_list`.
+
+Une fois ceci fait, la commande est:
+
+```title="Révocation d'un certificat ssh"
+sudo cert_revoke <certificate_ID>
+```
+
+!!!info "Réactiver un certificat"
+    
+    Si un certificat a été révoqué par erreur, il est possible d'annuler cette action avec l'option `-r` de la commande 
+    `cert_revoke`
