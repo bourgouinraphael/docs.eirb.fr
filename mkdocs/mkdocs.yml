@@ -10,6 +10,7 @@ nav:
     - gestion_vps/docker.md
     - gestion_vps/nginx.md
     - gestion_vps/services.md
+    - gestion_vps/redirections.md
     - gestion_vps/users.md
     - gestion_vps/firewall.md
     - gestion_vps/ssh.md
