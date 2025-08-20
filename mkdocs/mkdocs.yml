@@ -18,6 +18,7 @@ nav:
     - gestion_vps/monitoring.md
   - Passation: passation.md
   - Github: github.md
+  - Eirbuntu: eirbuntu.md
   - HOWTO respo web:
     - respo_web/intro.md
     - respo_web/ajout_site.md
